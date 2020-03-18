@@ -1,0 +1,37 @@
+.screen-reader-response {
+  display: none;
+}
+.wpcf7-not-valid-tip {
+  position: absolute;
+  top: auto;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  transform: translate(0, calc(100% + 5px));
+}
+.callback-block .callback-form__item {
+  position: relative;
+  width: calc((100% / 3) - (30px * 2) / 3);
+  flex: 0 1 auto;
+  margin-right: 30px;
+  margin-bottom: 30px;
+}
+.modal-body .callback-form__item,
+.callback-form .callback-form__item {
+  position: relative;
+  margin-bottom: 30px;
+}
+.callback-block .callback-form__item:nth-child(3) {
+  margin-right: 0;
+}
+.wpcf7-response-output {
+  display: block;
+  background: rgba(0, 0, 0, 0.25);
+  line-height: 30px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+}
+.vacancy-block-form textarea {
+  margin-bottom: 0;
+}

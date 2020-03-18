@@ -1,0 +1,109 @@
+.services-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+@media (max-width: 770px) {
+  .services-item {
+    flex-direction: column-reverse;
+  }
+}
+.services-item h1 {
+  margin-bottom: 42px !important;
+}
+@media (max-width: 1270px) {
+  .services-item h1 {
+    margin-bottom: 30px !important;
+  }
+}
+.services-item h2 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+@media (max-width: 1270px) {
+  .services-item h2 {
+    font-size: 25px;
+  }
+}
+@media (max-width: 970px) {
+  .services-item h2 {
+    font-size: 22px;
+  }
+}
+@media (max-width: 770px) {
+  .services-item h2 {
+    font-size: 20px;
+  }
+}
+@media (max-width: 470px) {
+  .services-item h2 {
+    font-size: 18px;
+  }
+}
+.services-item-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  margin-right: 52px;
+  background-color: #f7f7f7;
+  box-sizing: border-box;
+  padding: 41px 0 25px 25px;
+}
+@media (max-width: 1270px) {
+  .services-item-sidebar {
+    margin-right: 42px;
+  }
+}
+@media (max-width: 970px) {
+  .services-item-sidebar {
+    margin-right: 22px;
+    padding: 21px 0 15px 15px;
+  }
+}
+@media (max-width: 770px) {
+  .services-item-sidebar {
+    width: 100%;
+    margin-top: 60px;
+    margin-right: 0;
+  }
+}
+.services-item-sidebar__title {
+  padding: 0 0 0 10px;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 13px;
+}
+.services-item-sidebar .menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.services-item-sidebar .menu li {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  margin-bottom: 10px;
+}
+.services-item-sidebar .menu li a {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 16px;
+  color: inherit;
+  padding: 0 10px;
+  line-height: 30px;
+}
+.services-item-sidebar .menu li:hover a {
+  background-color: rgba(64, 186, 188, 0.5);
+}
+.services-item-sidebar .menu li.current-menu-item {
+  border-right: 4px solid #2c2c2c;
+}
+.services-item-sidebar .menu li.current-menu-item a {
+  background-color: #40babc;
+  color: #fff;
+}
+.services-item-content {
+  flex: 1 1 auto;
+}
+.services-item .accordion-block-list {
+  padding-top: 10px;
+}
