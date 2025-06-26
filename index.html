@@ -480,6 +480,8 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
         function calcularTotais() {
             // Calcular rendimentos
@@ -562,45 +564,69 @@
         calcularTotais();
         
         // Função para guardar em PDF
-        function guardarPDF() {
-            // Criar uma nova janela com o conteúdo atual
-            const printWindow = window.open('', '_blank');
-            
-            // Obter a data atual para o nome do arquivo
-            const hoje = new Date();
-            const dataFormatada = hoje.toLocaleDateString('pt-PT');
-            
-            // HTML completo para o PDF
-            const htmlContent = `
-                <!DOCTYPE html>
-                <html lang="pt">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Calculadora de Despesas - ${dataFormatada}</title>
-                    <style>
-                        ${document.querySelector('style').innerHTML}
-                        .save-button { display: none !important; }
-                        @media print {
-                            .save-button { display: none !important; }
-                            body { margin: 0; }
-                            .container { box-shadow: none; margin: 0; }
-                        }
-                    </style>
-                </head>
-                <body>
-                    ${document.querySelector('.container').outerHTML}
-                </body>
-                </html>
-            `;
-            
-            printWindow.document.write(htmlContent);
-            printWindow.document.close();
-            
-            // Aguardar o carregamento e imprimir
-            printWindow.onload = function() {
-                printWindow.print();
-                printWindow.close();
-            };
+        async function guardarPDF() {
+            try {
+                // Mostrar mensagem de carregamento
+                const botao = document.querySelector('.save-button');
+                const textoOriginal = botao.innerHTML;
+                botao.innerHTML = '⏳ Gerando PDF...';
+                botao.disabled = true;
+                
+                // Obter a data atual para o nome do arquivo
+                const hoje = new Date();
+                const dataFormatada = hoje.toLocaleDateString('pt-PT').replace(/\//g, '-');
+                
+                // Temporariamente esconder o botão para o screenshot
+                botao.style.display = 'none';
+                
+                // Capturar a página como imagem
+                const canvas = await html2canvas(document.querySelector('.container'), {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: false,
+                    backgroundColor: '#ffffff'
+                });
+                
+                // Mostrar o botão novamente
+                botao.style.display = 'block';
+                botao.innerHTML = textoOriginal;
+                botao.disabled = false;
+                
+                // Criar o PDF
+                const { jsPDF } = window.jspdf;
+                const imgData = canvas.toDataURL('image/png');
+                
+                // Configurar o PDF (A4)
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pdfWidth = 210; // A4 width in mm
+                const pdfHeight = 297; // A4 height in mm
+                
+                const imgWidth = pdfWidth - 20; // Margem de 10mm de cada lado
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                // Se a imagem for maior que uma página, ajustar
+                if (imgHeight > pdfHeight - 20) {
+                    const ratio = (pdfHeight - 20) / imgHeight;
+                    const adjustedWidth = imgWidth * ratio;
+                    const adjustedHeight = imgHeight * ratio;
+                    pdf.addImage(imgData, 'PNG', 10, 10, adjustedWidth, adjustedHeight);
+                } else {
+                    pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+                }
+                
+                // Fazer download do PDF
+                pdf.save(`calculadora-despesas-${dataFormatada}.pdf`);
+                
+            } catch (error) {
+                console.error('Erro ao gerar PDF:', error);
+                alert('Erro ao gerar PDF. Tente novamente.');
+                
+                // Restaurar botão em caso de erro
+                const botao = document.querySelector('.save-button');
+                botao.innerHTML = '💾 Guardar em PDF';
+                botao.disabled = false;
+                botao.style.display = 'block';
+            }
         }
     </script>
 </body>
