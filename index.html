@@ -103,6 +103,17 @@
             border-radius: 4px;
             text-align: right;
         }
+        
+        /* Cores para despesas obrigatórias e não obrigatórias */
+        .expense-item.obrigatoria {
+            background: #d4edda;
+            border-left: 3px solid #28a745;
+        }
+        .expense-item.nao-obrigatoria {
+            background: #fff3cd;
+            border-left: 3px solid #ffc107;
+        }
+        
         .totals {
             background: #fff3cd;
             padding: 20px;
@@ -141,6 +152,23 @@
             border-radius: 4px;
             text-align: right;
         }
+        
+        /* Estilos para as novas linhas de totais */
+        .total-breakdown {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #dee2e6;
+        }
+        .total-obrigatorias {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .total-nao-obrigatorias {
+            color: #856404;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -169,189 +197,189 @@
                 
                 <div class="expense-category">
                     <h3>🏠 GENÉRICAS</h3>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Renda/Prestação:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Água, Luz, Gás:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Internet/TV:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Combustível:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Seguro do carro:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Prestação do carro:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Transportes públicos:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Supermercado:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Takeaway/Delivery:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Comer fora:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Creche/Escola:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Fraldas/coisas bebé:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Roupa criança:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Brinquedos:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Telemóveis (ambos):</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Empréstimos:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Cartões de crédito:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Netflix/Spotify:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Medicamentos:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Seguros de saúde:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item obrigatoria">
                         <label>Produtos limpeza:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
                 </div>
 
                 <div class="expense-category">
                     <h3>👨 HOMEM</h3>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Barbeiro:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Produtos cabelo/barba:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Desodorizantes/perfumes:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Cerveja/bebidas:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Tabaco:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Café/pastelaria:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Jogos/apostas:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Futebol (bilhetes/café):</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Ferramentas/bricolagem:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Jogos/PlayStation:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Revistas/jornais:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
                 </div>
 
                 <div class="expense-category">
                     <h3>👩 MULHER</h3>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Cabeleireiro:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Unhas (manicure/pedicure):</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Massagens/estética:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Maquilhagem/cosmética:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Perfumes:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Depilação:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Roupa:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Sapatos/carteiras:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Bijuteria/acessórios:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Decoração casa:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Chocolates/doces:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
-                    <div class="expense-item">
+                    <div class="expense-item nao-obrigatoria">
                         <label>Cafés/bolos:</label>
-                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                        <input type="number" class="expense-input nao-obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
                 </div>
 
@@ -368,6 +396,19 @@
                 <span>Total Despesas:</span>
                 <span id="total-despesas">0 €</span>
             </div>
+            
+            <!-- Nova seção de breakdown das despesas -->
+            <div class="total-breakdown">
+                <div class="total-row total-obrigatorias">
+                    <span>💚 Despesas Obrigatórias:</span>
+                    <span id="total-obrigatorias">0 €</span>
+                </div>
+                <div class="total-row total-nao-obrigatorias">
+                    <span>💛 Despesas Não Obrigatórias:</span>
+                    <span id="total-nao-obrigatorias">0 €</span>
+                </div>
+            </div>
+            
             <div class="total-row final-total">
                 <span>Sobra/Falta:</span>
                 <span id="diferenca">+1874 €</span>
@@ -388,15 +429,30 @@
             document.getElementById('total-rendimentos').textContent = totalRendimentos;
             document.getElementById('display-rendimentos').textContent = totalRendimentos + ' €';
             
-            // Calcular despesas
-            const expenseInputs = document.querySelectorAll('.expense-input');
-            let totalDespesas = 0;
+            // Calcular despesas obrigatórias
+            const obrigatoriasInputs = document.querySelectorAll('.obrigatoria-input');
+            let totalObrigatorias = 0;
             
-            expenseInputs.forEach(input => {
+            obrigatoriasInputs.forEach(input => {
                 const value = parseFloat(input.value) || 0;
-                totalDespesas += value;
+                totalObrigatorias += value;
             });
             
+            // Calcular despesas não obrigatórias
+            const naoObrigatoriasInputs = document.querySelectorAll('.nao-obrigatoria-input');
+            let totalNaoObrigatorias = 0;
+            
+            naoObrigatoriasInputs.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                totalNaoObrigatorias += value;
+            });
+            
+            // Atualizar displays
+            document.getElementById('total-obrigatorias').textContent = totalObrigatorias + ' €';
+            document.getElementById('total-nao-obrigatorias').textContent = totalNaoObrigatorias + ' €';
+            
+            // Calcular total de despesas
+            const totalDespesas = totalObrigatorias + totalNaoObrigatorias;
             document.getElementById('total-despesas').textContent = totalDespesas + ' €';
             
             // Calcular diferença
