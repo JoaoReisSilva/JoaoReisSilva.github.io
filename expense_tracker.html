@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Despesas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .income-section {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .expenses-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+        }
+        .expense-category {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        .expense-category h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+        }
+        .expense-item label {
+            flex: 1;
+            font-size: 14px;
+        }
+        .expense-item input {
+            width: 80px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: right;
+        }
+        .totals {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #ffc107;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .final-total {
+            font-size: 18px;
+            color: #c0392b;
+            border-top: 2px solid #c0392b;
+            padding-top: 10px;
+        }
+        .surplus {
+            color: #27ae60;
+        }
+        .deficit {
+            color: #c0392b;
+        }
+        .income-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .income-item input {
+            width: 100px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Calculadora de Despesas da Prima</h1>
+        
+        <div class="income-section">
+            <h2>💰 Rendimentos</h2>
+            <div class="income-item">
+                <label>Salário da Prima:</label>
+                <input type="number" id="salario-prima" value="774" oninput="calcularTotais()"> €
+            </div>
+            <div class="income-item">
+                <label>Salário do Marido:</label>
+                <input type="number" id="salario-marido" value="1100" oninput="calcularTotais()"> €
+            </div>
+            <div class="income-item">
+                <label><strong>Total Rendimentos:</strong></label>
+                <strong><span id="total-rendimentos">1874</span> €</strong>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>💸 Despesas</h2>
+            <div class="expenses-grid">
+                
+                <div class="expense-category">
+                    <h3>🏠 GENÉRICAS</h3>
+                    <div class="expense-item">
+                        <label>Renda/Prestação:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Água, Luz, Gás:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Internet/TV:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Combustível:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Seguro do carro:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Prestação do carro:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Transportes públicos:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Supermercado:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Takeaway/Delivery:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Comer fora:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Creche/Escola:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Fraldas/coisas bebé:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Roupa criança:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Brinquedos:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Telemóveis (ambos):</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Empréstimos:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Cartões de crédito:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Netflix/Spotify:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Medicamentos:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Seguros de saúde:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Produtos limpeza:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                </div>
+
+                <div class="expense-category">
+                    <h3>👨 HOMEM</h3>
+                    <div class="expense-item">
+                        <label>Barbeiro:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Produtos cabelo/barba:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Desodorizantes/perfumes:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Cerveja/bebidas:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Tabaco:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Café/pastelaria:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Jogos/apostas:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Futebol (bilhetes/café):</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Ferramentas/bricolagem:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Jogos/PlayStation:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Revistas/jornais:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                </div>
+
+                <div class="expense-category">
+                    <h3>👩 MULHER</h3>
+                    <div class="expense-item">
+                        <label>Cabeleireiro:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Unhas (manicure/pedicure):</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Massagens/estética:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Maquilhagem/cosmética:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Perfumes:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Depilação:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Roupa:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Sapatos/carteiras:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Bijuteria/acessórios:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Decoração casa:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Chocolates/doces:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                    <div class="expense-item">
+                        <label>Cafés/bolos:</label>
+                        <input type="number" class="expense-input" oninput="calcularTotais()"> €
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="totals">
+            <h2>📈 TOTAIS</h2>
+            <div class="total-row">
+                <span>Total Rendimentos:</span>
+                <span id="display-rendimentos">1874 €</span>
+            </div>
+            <div class="total-row">
+                <span>Total Despesas:</span>
+                <span id="total-despesas">0 €</span>
+            </div>
+            <div class="total-row final-total">
+                <span>Sobra/Falta:</span>
+                <span id="diferenca">+1874 €</span>
+            </div>
+            <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 4px;">
+                <strong>📝 Conclusão:</strong> <span id="conclusao">Ainda não introduziste despesas...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calcularTotais() {
+            // Calcular rendimentos
+            const salarioPrima = parseFloat(document.getElementById('salario-prima').value) || 0;
+            const salarioMarido = parseFloat(document.getElementById('salario-marido').value) || 0;
+            const totalRendimentos = salarioPrima + salarioMarido;
+            
+            document.getElementById('total-rendimentos').textContent = totalRendimentos;
+            document.getElementById('display-rendimentos').textContent = totalRendimentos + ' €';
+            
+            // Calcular despesas
+            const expenseInputs = document.querySelectorAll('.expense-input');
+            let totalDespesas = 0;
+            
+            expenseInputs.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                totalDespesas += value;
+            });
+            
+            document.getElementById('total-despesas').textContent = totalDespesas + ' €';
+            
+            // Calcular diferença
+            const diferenca = totalRendimentos - totalDespesas;
+            const diferencaElement = document.getElementById('diferenca');
+            const conclusaoElement = document.getElementById('conclusao');
+            
+            if (diferenca > 0) {
+                diferencaElement.textContent = '+' + diferenca + ' €';
+                diferencaElement.className = 'surplus';
+                conclusaoElement.textContent = `Sobram ${diferenca}€ por mês. Os gastos parecem razoáveis!`;
+            } else if (diferenca < 0) {
+                diferencaElement.textContent = diferenca + ' €';
+                diferencaElement.className = 'deficit';
+                conclusaoElement.textContent = `Faltam ${Math.abs(diferenca)}€ por mês! Há gastos a mais ou valores errados!`;
+            } else {
+                diferencaElement.textContent = '0 €';
+                diferencaElement.className = '';
+                conclusaoElement.textContent = 'Gastos exatos aos rendimentos. Muito suspeito...';
+            }
+            
+            if (totalDespesas === 0) {
+                conclusaoElement.textContent = 'Ainda não introduziste despesas...';
+            }
+        }
+        
+        // Inicializar cálculos
+        calcularTotais();
+    </script>
+</body>
+</html>
