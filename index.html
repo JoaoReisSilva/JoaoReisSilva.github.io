@@ -161,6 +161,14 @@
             margin: 15px 0;
             border: 1px solid #dee2e6;
         }
+        .taxa-esforco {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #007bff;
+            border-left: 4px solid #007bff;
+        }
         .total-obrigatorias {
             color: #28a745;
             font-weight: bold;
@@ -168,6 +176,11 @@
         .total-nao-obrigatorias {
             color: #856404;
             font-weight: bold;
+        }
+        .taxa-valor {
+            color: #007bff;
+            font-weight: bold;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -178,16 +191,16 @@
         <div class="income-section">
             <h2>💰 Rendimentos</h2>
             <div class="income-item">
-                <label>Salário mulher:</label>
+                <label>Salário mulher líquido:</label>
                 <input type="number" id="salario-prima" value="0" oninput="calcularTotais()"> €
             </div>
             <div class="income-item">
-                <label>Salário homem:</label>
+                <label>Salário homem líquido:</label>
                 <input type="number" id="salario-marido" value="0" oninput="calcularTotais()"> €
             </div>
             <div class="income-item">
                 <label><strong>Total Rendimentos:</strong></label>
-                <strong><span id="total-rendimentos">1874</span> €</strong>
+                <strong><span id="total-rendimentos">0</span> €</strong>
             </div>
         </div>
 
@@ -390,7 +403,7 @@
             <h2>📈 TOTAIS</h2>
             <div class="total-row">
                 <span>Total Rendimentos:</span>
-                <span id="display-rendimentos">1874 €</span>
+                <span id="display-rendimentos">0 €</span>
             </div>
             <div class="total-row">
                 <span>Total Despesas:</span>
@@ -409,12 +422,23 @@
                 </div>
             </div>
             
+            <!-- Nova seção de taxa de esforço -->
+            <div class="taxa-esforco">
+                <div class="total-row taxa-valor">
+                    <span>🔵 Taxa de Esforço Máxima (35%):</span>
+                    <span id="taxa-esforco-maxima">0 €</span>
+                </div>
+                <div style="margin-top: 10px; font-size: 13px; color: #6c757d;">
+                    <em>💡 Valor máximo recomendado para créditos habitação/consumo (35% dos rendimentos líquidos)</em>
+                </div>
+            </div>
+            
             <div class="total-row final-total">
                 <span>Sobra/Falta:</span>
-                <span id="diferenca">+1874 €</span>
+                <span id="diferenca">0 €</span>
             </div>
             <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 4px;">
-                <strong>📝 Conclusão:</strong> <span id="conclusao">Ainda não introduziste despesas...</span>
+                <strong>📝 Conclusão:</strong> <span id="conclusao">Introduza os seus dados para começar...</span>
             </div>
         </div>
     </div>
@@ -428,6 +452,10 @@
             
             document.getElementById('total-rendimentos').textContent = totalRendimentos;
             document.getElementById('display-rendimentos').textContent = totalRendimentos + ' €';
+            
+            // Calcular taxa de esforço máxima (35% dos rendimentos)
+            const taxaEsforcoMaxima = totalRendimentos * 0.35;
+            document.getElementById('taxa-esforco-maxima').textContent = taxaEsforcoMaxima.toFixed(2) + ' €';
             
             // Calcular despesas obrigatórias
             const obrigatoriasInputs = document.querySelectorAll('.obrigatoria-input');
@@ -448,12 +476,12 @@
             });
             
             // Atualizar displays
-            document.getElementById('total-obrigatorias').textContent = totalObrigatorias + ' €';
-            document.getElementById('total-nao-obrigatorias').textContent = totalNaoObrigatorias + ' €';
+            document.getElementById('total-obrigatorias').textContent = totalObrigatorias.toFixed(2) + ' €';
+            document.getElementById('total-nao-obrigatorias').textContent = totalNaoObrigatorias.toFixed(2) + ' €';
             
             // Calcular total de despesas
             const totalDespesas = totalObrigatorias + totalNaoObrigatorias;
-            document.getElementById('total-despesas').textContent = totalDespesas + ' €';
+            document.getElementById('total-despesas').textContent = totalDespesas.toFixed(2) + ' €';
             
             // Calcular diferença
             const diferenca = totalRendimentos - totalDespesas;
@@ -461,21 +489,23 @@
             const conclusaoElement = document.getElementById('conclusao');
             
             if (diferenca > 0) {
-                diferencaElement.textContent = '+' + diferenca + ' €';
+                diferencaElement.textContent = '+' + diferenca.toFixed(2) + ' €';
                 diferencaElement.className = 'surplus';
-                conclusaoElement.textContent = `Sobram ${diferenca}€ por mês. Os gastos parecem razoáveis!`;
+                conclusaoElement.textContent = `Sobram ${diferenca.toFixed(2)}€ por mês. Os gastos parecem razoáveis!`;
             } else if (diferenca < 0) {
-                diferencaElement.textContent = diferenca + ' €';
+                diferencaElement.textContent = diferenca.toFixed(2) + ' €';
                 diferencaElement.className = 'deficit';
-                conclusaoElement.textContent = `Faltam ${Math.abs(diferenca)}€ por mês! Há gastos a mais ou valores errados!`;
+                conclusaoElement.textContent = `Faltam ${Math.abs(diferenca).toFixed(2)}€ por mês! Há gastos a mais ou valores errados!`;
             } else {
-                diferencaElement.textContent = '0 €';
+                diferencaElement.textContent = '0.00 €';
                 diferencaElement.className = '';
                 conclusaoElement.textContent = 'Gastos exatos aos rendimentos. Muito suspeito...';
             }
             
-            if (totalDespesas === 0) {
-                conclusaoElement.textContent = 'Ainda não introduziste despesas...';
+            if (totalRendimentos === 0) {
+                conclusaoElement.textContent = 'Introduza os seus dados para começar...';
+            } else if (totalDespesas === 0) {
+                conclusaoElement.textContent = 'Ainda não introduziu despesas...';
             }
         }
         
