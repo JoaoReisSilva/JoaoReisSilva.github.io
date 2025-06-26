@@ -25,9 +25,24 @@
         }
         .income-section {
             background: #e8f5e8;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+        }
+        .income-section h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 18px;
+            border-bottom: 2px solid #27ae60;
+            padding-bottom: 8px;
+        }
+        .obrigacoes-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            border-left: 4px solid #6c757d;
         }
         .section {
             margin-bottom: 30px;
@@ -102,6 +117,7 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             text-align: right;
+            font-weight: bold;
         }
         
         /* Cores para despesas obrigatórias e não obrigatórias */
@@ -144,13 +160,24 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            padding: 5px 0;
+        }
+        .income-item label {
+            flex: 1;
+            margin-right: 15px;
         }
         .income-item input {
-            width: 100px;
-            padding: 5px;
+            width: 120px;
+            padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
             text-align: right;
+            font-weight: bold;
+        }
+        .income-item strong {
+            width: 120px;
+            text-align: right;
+            display: inline-block;
         }
         
         /* Estilos para as novas linhas de totais */
@@ -186,22 +213,27 @@
             background: #28a745;
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 15px 30px;
             border-radius: 8px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: inline-block;
         }
         .save-button:hover {
             background: #218838;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
         .save-button:active {
             transform: scale(0.98);
+        }
+        .save-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
         }
     </style>
 </head>
@@ -210,18 +242,61 @@
         <h1>📊 Calculadora de Despesas</h1>
         
         <div class="income-section">
-            <h2>💰 Rendimentos</h2>
+            <h2>💰 Rendimentos e Taxa de Esforço</h2>
+            
+            <!-- Rendimentos -->
             <div class="income-item">
                 <label>Salário mulher líquido:</label>
-                <input type="number" id="salario-prima" value="0" oninput="calcularTotais()"> €
+                <input type="number" id="salario-prima" value="0" oninput="calcularTotais()">
             </div>
             <div class="income-item">
                 <label>Salário homem líquido:</label>
-                <input type="number" id="salario-marido" value="0" oninput="calcularTotais()"> €
+                <input type="number" id="salario-marido" value="0" oninput="calcularTotais()">
             </div>
             <div class="income-item">
                 <label><strong>Total Rendimentos:</strong></label>
                 <strong><span id="total-rendimentos">0</span> €</strong>
+            </div>
+            
+            <!-- Obrigações Financeiras -->
+            <div class="obrigacoes-section">
+                <h3>🏠 Obrigações Financeiras Existentes</h3>
+                <div class="income-item">
+                    <label>Renda/Prestação habitação:</label>
+                    <input type="number" id="renda-prestacao" value="0" oninput="calcularTotais()">
+                </div>
+                <div class="income-item">
+                    <label>Prestação do carro:</label>
+                    <input type="number" id="prestacao-carro" value="0" oninput="calcularTotais()">
+                </div>
+                <div class="income-item">
+                    <label>Empréstimos:</label>
+                    <input type="number" id="emprestimos" value="0" oninput="calcularTotais()">
+                </div>
+                <div class="income-item">
+                    <label>Cartões de crédito:</label>
+                    <input type="number" id="cartoes-credito" value="0" oninput="calcularTotais()">
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de resumo da taxa de esforço -->
+        <div class="taxa-esforco" style="margin-bottom: 30px;">
+            <div class="total-row">
+                <span>🏠 Rendimento Líquido Disponível:</span>
+                <span id="rendimento-disponivel">0.00 €</span>
+            </div>
+            <div class="total-row taxa-valor">
+                <span>🔵 Taxa de Esforço Máxima (35%):</span>
+                <span id="taxa-esforco-maxima">0.00 €</span>
+            </div>
+            <div style="margin: 15px 0; font-size: 13px; color: #6c757d; font-style: italic;">
+                💡 Calculado sobre o rendimento líquido após descontar renda, créditos e prestações existentes
+            </div>
+            <div style="text-align: center;">
+                <button class="save-button" onclick="guardarPDF()">
+                    💾 Guardar em PDF
+                </button>
             </div>
         </div>
 
@@ -451,21 +526,6 @@
                 </div>
             </div>
             
-            <!-- Nova seção de taxa de esforço -->
-            <div class="taxa-esforco">
-                <div class="total-row">
-                    <span>🏠 Rendimento Líquido Disponível:</span>
-                    <span id="rendimento-disponivel">0 €</span>
-                </div>
-                <div class="total-row taxa-valor">
-                    <span>🔵 Taxa de Esforço Máxima (35%):</span>
-                    <span id="taxa-esforco-maxima">0 €</span>
-                </div>
-                <div style="margin-top: 10px; font-size: 13px; color: #6c757d;">
-                    <em>💡 Calculado sobre o rendimento líquido após descontar renda, créditos e prestações existentes</em>
-                </div>
-            </div>
-            
             <div class="total-row final-total">
                 <span>Sobra/Falta:</span>
                 <span id="diferenca">0 €</span>
@@ -473,10 +533,6 @@
             <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 4px;">
                 <strong>📝 Conclusão:</strong> <span id="conclusao">Introduza os seus dados para começar...</span>
             </div>
-            
-            <button class="save-button" onclick="guardarPDF()">
-                💾 Guardar em PDF
-            </button>
         </div>
     </div>
 
@@ -492,7 +548,7 @@
             document.getElementById('total-rendimentos').textContent = totalRendimentos;
             document.getElementById('display-rendimentos').textContent = totalRendimentos + ' €';
             
-            // Obter valores das obrigações financeiras existentes
+            // Obter valores das obrigações financeiras existentes (agora dos campos do topo)
             const rendaPrestacao = parseFloat(document.getElementById('renda-prestacao').value) || 0;
             const prestacaoCarro = parseFloat(document.getElementById('prestacao-carro').value) || 0;
             const emprestimos = parseFloat(document.getElementById('emprestimos').value) || 0;
@@ -508,9 +564,9 @@
             const taxaEsforcoMaxima = rendimentoDisponivel * 0.35;
             document.getElementById('taxa-esforco-maxima').textContent = taxaEsforcoMaxima.toFixed(2) + ' €';
             
-            // Calcular despesas obrigatórias
+            // Calcular despesas obrigatórias (incluindo obrigações do topo)
             const obrigatoriasInputs = document.querySelectorAll('.obrigatoria-input');
-            let totalObrigatorias = 0;
+            let totalObrigatorias = obrigacoesExistentes; // Começar com as obrigações do topo
             
             obrigatoriasInputs.forEach(input => {
                 const value = parseFloat(input.value) || 0;
@@ -554,194 +610,4 @@
             }
             
             if (totalRendimentos === 0) {
-                conclusaoElement.textContent = 'Introduza os seus dados para começar...';
-            } else if (totalDespesas === 0) {
-                conclusaoElement.textContent = 'Ainda não introduziu despesas...';
-            }
-        }
-        
-        // Inicializar cálculos
-        calcularTotais();
-        
-        // Função para guardar em PDF
-        async function guardarPDF() {
-            try {
-                // Mostrar mensagem de carregamento
-                const botao = document.querySelector('.save-button');
-                const textoOriginal = botao.innerHTML;
-                botao.innerHTML = '⏳ Gerando PDF...';
-                botao.disabled = true;
-                
-                // Detectar se é mobile
-                const isMobile = window.innerWidth <= 768;
-                
-                if (isMobile) {
-                    // Para mobile: criar uma versão desktop temporária
-                    await gerarPDFMobile();
-                } else {
-                    // Para desktop: usar o método existente
-                    await gerarPDFDesktop();
-                }
-                
-            } catch (error) {
-                console.error('Erro ao gerar PDF:', error);
-                alert('Erro ao gerar PDF. Tente novamente.');
-                
-                // Restaurar botão em caso de erro
-                const botao = document.querySelector('.save-button');
-                botao.innerHTML = '💾 Guardar em PDF';
-                botao.disabled = false;
-            }
-        }
-        
-        // Função para gerar PDF em mobile (layout desktop temporário)
-        async function gerarPDFMobile() {
-            // Criar um container temporário com layout desktop
-            const tempContainer = document.createElement('div');
-            tempContainer.style.position = 'absolute';
-            tempContainer.style.top = '-9999px';
-            tempContainer.style.left = '-9999px';
-            tempContainer.style.width = '1200px'; // Largura desktop
-            tempContainer.style.backgroundColor = '#f5f5f5';
-            tempContainer.style.fontFamily = 'Arial, sans-serif';
-            tempContainer.style.padding = '20px';
-            
-            // Copiar o conteúdo da calculadora
-            tempContainer.innerHTML = document.querySelector('.container').outerHTML;
-            
-            // Aplicar estilos desktop ao container temporário
-            const tempStyle = document.createElement('style');
-            tempStyle.textContent = `
-                .temp-container {
-                    max-width: 1200px;
-                    margin: 0 auto;
-                    background: white;
-                    padding: 20px;
-                    border-radius: 10px;
-                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                }
-                .temp-container .expenses-grid {
-                    display: grid !important;
-                    grid-template-columns: 1fr 1fr 1fr !important;
-                    gap: 30px !important;
-                }
-                .temp-container .save-button {
-                    display: none !important;
-                }
-                .temp-container .expense-item {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 10px;
-                    padding: 8px;
-                    background: white;
-                    border-radius: 4px;
-                }
-                .temp-container .expense-item.obrigatoria {
-                    background: #d4edda;
-                    border-left: 3px solid #28a745;
-                }
-                .temp-container .expense-item.nao-obrigatoria {
-                    background: #fff3cd;
-                    border-left: 3px solid #ffc107;
-                }
-                .temp-container .income-item {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 10px;
-                }
-                .temp-container .total-row {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-bottom: 10px;
-                    font-weight: bold;
-                }
-            `;
-            
-            tempContainer.appendChild(tempStyle);
-            tempContainer.querySelector('.container').classList.add('temp-container');
-            document.body.appendChild(tempContainer);
-            
-            // Capturar como imagem
-            const canvas = await html2canvas(tempContainer.querySelector('.container'), {
-                scale: 1.5,
-                useCORS: true,
-                allowTaint: false,
-                backgroundColor: '#ffffff',
-                width: 1200,
-                height: tempContainer.querySelector('.container').offsetHeight
-            });
-            
-            // Remover container temporário
-            document.body.removeChild(tempContainer);
-            
-            // Criar e fazer download do PDF
-            await criarPDF(canvas);
-        }
-        
-        // Função para gerar PDF em desktop
-        async function gerarPDFDesktop() {
-            // Temporariamente esconder o botão para o screenshot
-            const botao = document.querySelector('.save-button');
-            botao.style.display = 'none';
-            
-            // Capturar a página como imagem
-            const canvas = await html2canvas(document.querySelector('.container'), {
-                scale: 2,
-                useCORS: true,
-                allowTaint: false,
-                backgroundColor: '#ffffff'
-            });
-            
-            // Mostrar o botão novamente
-            botao.style.display = 'block';
-            
-            // Criar e fazer download do PDF
-            await criarPDF(canvas);
-        }
-        
-        // Função comum para criar o PDF
-        async function criarPDF(canvas) {
-            // Obter a data atual para o nome do arquivo
-            const hoje = new Date();
-            const dataFormatada = hoje.toLocaleDateString('pt-PT').replace(/\//g, '-');
-            
-            // Criar o PDF
-            const { jsPDF } = window.jspdf;
-            const imgData = canvas.toDataURL('image/png');
-            
-            // Configurar o PDF (A4)
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const pdfWidth = 210; // A4 width in mm
-            const pdfHeight = 297; // A4 height in mm
-            
-            const imgWidth = pdfWidth - 20; // Margem de 10mm de cada lado
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            
-            // Se a imagem for maior que uma página, dividir em múltiplas páginas
-            if (imgHeight > pdfHeight - 20) {
-                const pageHeight = pdfHeight - 20;
-                const totalPages = Math.ceil(imgHeight / pageHeight);
-                
-                for (let i = 0; i < totalPages; i++) {
-                    if (i > 0) pdf.addPage();
-                    
-                    const yOffset = -(pageHeight * i);
-                    pdf.addImage(imgData, 'PNG', 10, 10 + yOffset, imgWidth, imgHeight);
-                }
-            } else {
-                pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-            }
-            
-            // Fazer download do PDF
-            pdf.save(`calculadora-despesas-${dataFormatada}.pdf`);
-            
-            // Restaurar botão
-            const botao = document.querySelector('.save-button');
-            botao.innerHTML = '💾 Guardar em PDF';
-            botao.disabled = false;
-        }
-    </script>
-</body>
-</html>
+                conclusaoElement.textContent = 'Introdu
