@@ -212,7 +212,7 @@
                     <h3>🏠 GENÉRICAS</h3>
                     <div class="expense-item obrigatoria">
                         <label>Renda/Prestação:</label>
-                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
+                        <input type="number" id="renda-prestacao" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
                     <div class="expense-item obrigatoria">
                         <label>Água, Luz, Gás:</label>
@@ -232,7 +232,7 @@
                     </div>
                     <div class="expense-item obrigatoria">
                         <label>Prestação do carro:</label>
-                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
+                        <input type="number" id="prestacao-carro" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
                     <div class="expense-item obrigatoria">
                         <label>Transportes públicos:</label>
@@ -272,11 +272,11 @@
                     </div>
                     <div class="expense-item obrigatoria">
                         <label>Empréstimos:</label>
-                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
+                        <input type="number" id="emprestimos" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
                     <div class="expense-item obrigatoria">
                         <label>Cartões de crédito:</label>
-                        <input type="number" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
+                        <input type="number" id="cartoes-credito" class="expense-input obrigatoria-input" oninput="calcularTotais()"> €
                     </div>
                     <div class="expense-item nao-obrigatoria">
                         <label>Netflix/Spotify:</label>
@@ -424,12 +424,16 @@
             
             <!-- Nova seção de taxa de esforço -->
             <div class="taxa-esforco">
+                <div class="total-row">
+                    <span>🏠 Rendimento Líquido Disponível:</span>
+                    <span id="rendimento-disponivel">0 €</span>
+                </div>
                 <div class="total-row taxa-valor">
                     <span>🔵 Taxa de Esforço Máxima (35%):</span>
                     <span id="taxa-esforco-maxima">0 €</span>
                 </div>
                 <div style="margin-top: 10px; font-size: 13px; color: #6c757d;">
-                    <em>💡 Valor máximo recomendado para créditos habitação/consumo (35% dos rendimentos líquidos)</em>
+                    <em>💡 Calculado sobre o rendimento líquido após descontar renda, créditos e prestações existentes</em>
                 </div>
             </div>
             
@@ -453,8 +457,20 @@
             document.getElementById('total-rendimentos').textContent = totalRendimentos;
             document.getElementById('display-rendimentos').textContent = totalRendimentos + ' €';
             
-            // Calcular taxa de esforço máxima (35% dos rendimentos)
-            const taxaEsforcoMaxima = totalRendimentos * 0.35;
+            // Obter valores das obrigações financeiras existentes
+            const rendaPrestacao = parseFloat(document.getElementById('renda-prestacao').value) || 0;
+            const prestacaoCarro = parseFloat(document.getElementById('prestacao-carro').value) || 0;
+            const emprestimos = parseFloat(document.getElementById('emprestimos').value) || 0;
+            const cartoesCredito = parseFloat(document.getElementById('cartoes-credito').value) || 0;
+            
+            // Calcular rendimento líquido disponível (após descontar obrigações existentes)
+            const obrigacoesExistentes = rendaPrestacao + prestacaoCarro + emprestimos + cartoesCredito;
+            const rendimentoDisponivel = totalRendimentos - obrigacoesExistentes;
+            
+            document.getElementById('rendimento-disponivel').textContent = rendimentoDisponivel.toFixed(2) + ' €';
+            
+            // Calcular taxa de esforço máxima (35% do rendimento disponível)
+            const taxaEsforcoMaxima = rendimentoDisponivel * 0.35;
             document.getElementById('taxa-esforco-maxima').textContent = taxaEsforcoMaxima.toFixed(2) + ' €';
             
             // Calcular despesas obrigatórias
